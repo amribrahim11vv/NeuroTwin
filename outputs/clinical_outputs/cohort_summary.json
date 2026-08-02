@@ -1,0 +1,23 @@
+{
+  "MI": {
+    "n_patients": 10,
+    "mean_pred_pcl5_delta": -1.36,
+    "std_pred_pcl5_delta": 0.161,
+    "mean_pred_wemwbs_delta": -0.044,
+    "std_pred_wemwbs_delta": 0.021
+  },
+  "NF": {
+    "n_patients": 10,
+    "mean_pred_pcl5_delta": 0.193,
+    "std_pred_pcl5_delta": 0.291,
+    "mean_pred_wemwbs_delta": -0.022,
+    "std_pred_wemwbs_delta": 0.024
+  },
+  "CONTROL": {
+    "n_patients": 9,
+    "mean_pred_pcl5_delta": -0.402,
+    "std_pred_pcl5_delta": 0.136,
+    "mean_pred_wemwbs_delta": -0.045,
+    "std_pred_wemwbs_delta": 0.016
+  }
+}

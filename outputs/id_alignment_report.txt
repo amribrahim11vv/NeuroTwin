@@ -1,0 +1,37 @@
+======================================================================
+Tribe V2  -  Participant ID Alignment Verification
+======================================================================
+
+======================================================================
+SUMMARY
+======================================================================
+Total unique IDs across all files: 29
+  CI_clinical: 29 IDs -> ['P01', 'P02', 'P03', 'P04', 'P05', 'P06', 'P07', 'P08', 'P09', 'P10', 'P11', 'P12', 'P13', 'P14', 'P15', 'P16', 'P17', 'P18', 'P19', 'P20', 'P21', 'P22', 'P23', 'P24', 'P25', 'P26', 'P27', 'P28', 'P29']
+  mood_stress: 20 IDs -> ['P08', 'P09', 'P10', 'P11', 'P12', 'P13', 'P14', 'P15', 'P16', 'P17', 'P18', 'P19', 'P20', 'P22', 'P23', 'P24', 'P25', 'P26', 'P27', 'P28']
+  NF_datasheets: 10 IDs -> ['P16', 'P17', 'P18', 'P19', 'P20', 'P22', 'P23', 'P24', 'P25', 'P27']
+  MI_datasheets: 10 IDs -> ['P08', 'P09', 'P10', 'P11', 'P12', 'P13', 'P14', 'P15', 'P26', 'P28']
+
+======================================================================
+DISCREPANCY REPORT
+======================================================================
+
+[!] Mismatch between [CI_clinical] and [mood_stress]:
+   IDs only in CI_clinical: ['P01', 'P02', 'P03', 'P04', 'P05', 'P06', 'P07', 'P21', 'P29']
+
+[!] Mismatch between [CI_clinical] and [NF_datasheets]:
+   IDs only in CI_clinical: ['P01', 'P02', 'P03', 'P04', 'P05', 'P06', 'P07', 'P08', 'P09', 'P10', 'P11', 'P12', 'P13', 'P14', 'P15', 'P21', 'P26', 'P28', 'P29']
+
+[!] Mismatch between [CI_clinical] and [MI_datasheets]:
+   IDs only in CI_clinical: ['P01', 'P02', 'P03', 'P04', 'P05', 'P06', 'P07', 'P16', 'P17', 'P18', 'P19', 'P20', 'P21', 'P22', 'P23', 'P24', 'P25', 'P27', 'P29']
+
+[!] Mismatch between [NF_datasheets] and [mood_stress]:
+   IDs only in mood_stress: ['P08', 'P09', 'P10', 'P11', 'P12', 'P13', 'P14', 'P15', 'P26', 'P28']
+
+[!] Mismatch between [MI_datasheets] and [mood_stress]:
+   IDs only in mood_stress: ['P16', 'P17', 'P18', 'P19', 'P20', 'P22', 'P23', 'P24', 'P25', 'P27']
+
+[!] Mismatch between [MI_datasheets] and [NF_datasheets]:
+   IDs only in MI_datasheets: ['P08', 'P09', 'P10', 'P11', 'P12', 'P13', 'P14', 'P15', 'P26', 'P28']
+   IDs only in NF_datasheets: ['P16', 'P17', 'P18', 'P19', 'P20', 'P22', 'P23', 'P24', 'P25', 'P27']
+
+[!] Manual review required for mismatched IDs above before proceeding.

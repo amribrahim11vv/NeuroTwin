@@ -1,0 +1,82 @@
+{
+  "participant_id": "P02",
+  "group": "CONTROL",
+  "n_sessions": 1,
+  "clinical_baselines": {
+    "pre_pcl5_total": 2.0,
+    "post_pcl5_total": 5.0,
+    "pre_wemwbs": 5.0,
+    "post_wemwbs": 4.0,
+    "pre_cd_risc": 1.0,
+    "post_cd_risc": 2.0,
+    "pre_gse": 4.0
+  },
+  "model_predictions": {
+    "pcl5_delta": -0.341,
+    "wemwbs_delta": -0.06,
+    "cdrisc_delta": 0.137,
+    "gse_baseline": 0.589
+  },
+  "latent_trajectory": [
+    {
+      "session": 1,
+      "latent_state_z": [
+        -0.1981,
+        -0.4998,
+        -0.2982,
+        0.127,
+        -0.9134,
+        -0.4577,
+        0.4802,
+        -0.5096,
+        0.2452,
+        0.2626,
+        0.9686,
+        -1.3039,
+        1.0716,
+        -0.6552,
+        -0.4945,
+        -0.6382
+      ],
+      "gru_hidden_h": [
+        0.2089,
+        -0.099,
+        0.11,
+        0.2186,
+        -0.0583,
+        -0.1761,
+        -0.0605,
+        0.1372,
+        -0.1481,
+        -0.1269,
+        -0.0306,
+        -0.0449,
+        0.2648,
+        0.1078,
+        0.2054,
+        0.1031,
+        0.11,
+        -0.0345,
+        0.0694,
+        -0.1412,
+        0.1667,
+        0.0019,
+        -0.2193,
+        -0.0561,
+        -0.0908,
+        -0.058,
+        0.2029,
+        -0.079,
+        -0.0072,
+        -0.0784,
+        -0.2163,
+        0.0697
+      ]
+    }
+  ],
+  "session_drift_L2": [],
+  "uncertainty": {
+    "note": "Full uncertainty quantification requires ensemble LoRA rollouts (N>=5).",
+    "h_patient_norm": 0.7614
+  }
+}

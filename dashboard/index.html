@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NeuroTwin — PTSD Digital Brain Twin Platform</title>
+  <meta name="description" content="NeuroTwin — AI-powered PTSD Digital Brain Twin Platform with offline RL decision support, latent state drift visualization, and clinical copilot.">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Material Symbols -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20,400,0,0" rel="stylesheet">
+
+  <!-- FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       AMBIENT BACKGROUND — WebGL Shader
+  ═══════════════════════════════════════════════════════════ -->
+  <canvas id="bg-shader" aria-hidden="true"></canvas>
+  <div class="bg-orbs" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <div class="app-shell">
+
+    <!-- ═══════════════════════════════════════════════════════
+         LEFT SIDEBAR
+    ═══════════════════════════════════════════════════════ -->
+    <aside class="sidebar" id="sidebar">
+      <!-- Brand -->
+      <div class="brand">
+        <div class="brand-icon-wrap">
+          <span class="material-symbols-outlined brand-icon">neurology</span>
+        </div>
+        <div class="brand-text">
+          <span class="brand-name">NeuroTwin</span>
+          <span class="brand-sub">PTSD Clinical AI</span>
+        </div>
+      </div>
+
+      <!-- Navigation -->
+      <nav class="nav-menu" aria-label="Main navigation">
+        <button class="nav-btn active" data-target="overview-section" id="nav-overview">
+          <span class="material-symbols-outlined nav-icon">grid_view</span>
+          <span>Dashboard</span>
+        </button>
+        <button class="nav-btn" data-target="explorer-section" id="nav-explorer">
+          <span class="material-symbols-outlined nav-icon">psychology</span>
+          <span>Patient Explorer</span>
+        </button>
+        <button class="nav-btn" data-target="xai-section" id="nav-xai">
+          <span class="material-symbols-outlined nav-icon">bubble_chart</span>
+          <span>Explainable AI</span>
+        </button>
+      </nav>
+
+      <!-- System Status -->
+      <div class="sidebar-footer">
+        <div class="status-row">
+          <span class="status-dot online"></span>
+          <span class="status-label">Engine Online</span>
+        </div>
+        <div class="model-badge">
+          <span class="material-symbols-outlined" style="font-size:13px;">memory</span>
+          <span>NeuroTwin-RL-v4.2</span>
+        </div>
+        <div class="user-chip">
+          <div class="user-avatar">
+            <span class="material-symbols-outlined">person</span>
+          </div>
+          <div class="user-meta">
+            <span class="user-name">DR. ARIS</span>
+            <span class="user-level">Level 4 Auth</span>
+          </div>
+          <span class="material-symbols-outlined logout-icon">logout</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ═══════════════════════════════════════════════════════
+         MAIN CONTENT AREA
+    ═══════════════════════════════════════════════════════ -->
+    <div class="main-wrap">
+
+      <!-- TOP HEADER BAR -->
+      <header class="top-bar glass-panel">
+        <div class="top-bar-left">
+          <button class="icon-btn sidebar-toggle" aria-label="Toggle sidebar">
+            <span class="material-symbols-outlined">menu</span>
+          </button>
+          <div class="section-meta">
+            <h2 id="section-title" class="section-title">Cohort Overview</h2>
+            <p id="section-subtitle" class="section-subtitle">Real-time neurophysiological digital brain twins &amp; RL policy recommendations.</p>
+          </div>
+        </div>
+        <div class="top-bar-right">
+          <div class="live-badge">
+            <span class="live-dot"></span>
+            <span>AI Live Inference</span>
+          </div>
+          <button class="btn btn-primary btn-sm" id="btn-refresh">
+            <span class="material-symbols-outlined">refresh</span>
+            Refresh
+          </button>
+          <button class="icon-btn" aria-label="Notifications">
+            <span class="material-symbols-outlined">notifications</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- MAIN SCROLLABLE -->
+      <main class="main-content" id="main-scroll">
+
+        <!-- ══════════════════════════════════════════════
+             1. OVERVIEW SECTION
+        ══════════════════════════════════════════════ -->
+        <section id="overview-section" class="dashboard-section active">
+
+          <!-- Hero Banner -->
+          <div class="hero-banner glass-panel">
+            <div class="hero-shader-canvas" aria-hidden="true">
+              <canvas id="hero-canvas"></canvas>
+            </div>
+            <div class="hero-content">
+              <span class="hero-tag">
+                <span class="material-symbols-outlined">verified</span>
+                CQL Offline RL · LoRA Adaptation · VAE Latent States
+              </span>
+              <h1 class="hero-title">NeuroTwin<br><span style="color:var(--c-cyan-dim);">PTSD Clinical AI</span></h1>
+              <p class="hero-desc">Simulating individual neurophysiological sequences using parameter-efficient LoRA-adapted latent-state models. Guided by Conservative Q-Learning (CQL) offline policy networks to optimize patient-specific neurofeedback training.</p>
+            </div>
+            <div class="hero-metrics">
+              <div class="hero-metric">
+                <span class="hero-metric-val" id="cohort-total-n">—</span>
+                <span class="hero-metric-label">Total Patients</span>
+              </div>
+              <div class="hero-metric-divider"></div>
+              <div class="hero-metric">
+                <span class="hero-metric-val cyan" id="cohort-nf-n">—</span>
+                <span class="hero-metric-label">NF Group</span>
+              </div>
+              <div class="hero-metric-divider"></div>
+              <div class="hero-metric">
+                <span class="hero-metric-val violet" id="cohort-mi-n">—</span>
+                <span class="hero-metric-label">MI Group</span>
+              </div>
+              <div class="hero-metric-divider"></div>
+              <div class="hero-metric">
+                <span class="hero-metric-val" id="cohort-ctrl-n">—</span>
+                <span class="hero-metric-label">Control</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Mini Stats Row -->
+          <div class="mini-stats-grid">
+            <div class="mini-stat glass-panel">
+              <span class="material-symbols-outlined mini-stat-icon cyan">analytics</span>
+              <div>
+                <div class="mini-stat-val">55.6%</div>
+                <div class="mini-stat-label">Model Accuracy</div>
+              </div>
+              <span class="trend-badge positive">↑ baseline</span>
+            </div>
+            <div class="mini-stat glass-panel">
+              <span class="material-symbols-outlined mini-stat-icon violet">ssid_chart</span>
+              <div>
+                <div class="mini-stat-val">0.4027</div>
+                <div class="mini-stat-label">Pearson r (Reward)</div>
+              </div>
+              <span class="trend-badge positive">Gate ✓</span>
+            </div>
+            <div class="mini-stat glass-panel">
+              <span class="material-symbols-outlined mini-stat-icon cyan">hub</span>
+              <div>
+                <div class="mini-stat-val">Z = 16</div>
+                <div class="mini-stat-label">Latent Dimension</div>
+              </div>
+              <span class="trend-badge info">β-VAE</span>
+            </div>
+            <div class="mini-stat glass-panel">
+              <span class="material-symbols-outlined mini-stat-icon emerald">tune</span>
+              <div>
+                <div class="mini-stat-val">20 LoRA</div>
+                <div class="mini-stat-label">Active Adapters</div>
+              </div>
+              <span class="trend-badge positive">Adapted</span>
+            </div>
+          </div>
+
+          <!-- Charts + Chatbot Grid -->
+          <div class="dashboard-grid">
+
+            <!-- Cohort Chart -->
+            <div class="card glass-panel span-2">
+              <div class="card-header">
+                <div class="card-header-title">
+                  <span class="material-symbols-outlined card-icon">bar_chart</span>
+                  <h3>Predicted PCL-5 Delta by Intervention Group</h3>
+                </div>
+              </div>
+              <div class="card-body chart-container">
+                <canvas id="cohortChart"></canvas>
+              </div>
+            </div>
+
+            <!-- RAG Chatbot -->
+            <div class="card glass-panel chatbot-card">
+              <div class="card-header">
+                <div class="card-header-title">
+                  <span class="copilot-dot"></span>
+                  <h3>NeuroTwin Copilot</h3>
+                </div>
+                <span class="material-symbols-outlined" style="color:var(--c-cyan); font-size:20px;">psychology_alt</span>
+              </div>
+              <div class="card-body chatbot-body">
+                <div class="chat-messages" id="chat-messages-container">
+                  <div class="chat-message system">
+                    <div class="avatar"><span class="material-symbols-outlined">smart_toy</span></div>
+                    <div class="message-content">
+                      <p>PTSD Brain Twin RAG Assistant initialized. Ask me about patient parameters, cohort performance, or CQL recommendations.</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="chat-quick-actions">
+                  <button class="quick-btn" data-query="Explain P16's brain twin state">Explain P16</button>
+                  <button class="quick-btn" data-query="How does NF group compare to MI?">NF vs MI</button>
+                  <button class="quick-btn" data-query="What is the validation Pearson r?">Pearson r</button>
+                </div>
+                <div class="chat-input-area">
+                  <input type="text" id="chat-input" placeholder="Ask the clinical copilot...">
+                  <button id="btn-chat-send" class="chat-send-btn" aria-label="Send">
+                    <span class="material-symbols-outlined">send</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Cohort Summary Table -->
+            <div class="card glass-panel span-2">
+              <div class="card-header">
+                <div class="card-header-title">
+                  <span class="material-symbols-outlined card-icon">table_chart</span>
+                  <h3>Active Cohort Summary</h3>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="table-wrap">
+                  <table class="custom-table" id="cohort-summary-table">
+                    <thead>
+                      <tr>
+                        <th>Group</th>
+                        <th>Patients</th>
+                        <th>Est. PCL Delta</th>
+                        <th>Est. WEMWBS Delta</th>
+                      </tr>
+                    </thead>
+                    <tbody></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <!-- Dropout Risk Gauge -->
+            <div class="card glass-panel risk-card">
+              <div class="card-header">
+                <div class="card-header-title">
+                  <span class="material-symbols-outlined card-icon amber">warning</span>
+                  <h3>Cohort Dropout Risk</h3>
+                </div>
+              </div>
+              <div class="card-body risk-gauge-body">
+                <div class="risk-gauge-container">
+                  <svg class="risk-ring" viewBox="0 0 120 120">
+                    <circle class="ring-bg" cx="60" cy="60" r="50"></circle>
+                    <circle class="ring-stroke" cx="60" cy="60" r="50" style="stroke-dasharray: 314; stroke-dashoffset: 80;"></circle>
+                  </svg>
+                  <div class="risk-gauge-label">
+                    <span class="value amber-glow">25%</span>
+                    <span class="lbl">Cohort Risk</span>
+                  </div>
+                </div>
+                <div class="risk-details">
+                  <div class="risk-row"><span class="bullet high"></span><span>High Risk:</span><strong>2 Patients</strong></div>
+                  <div class="risk-row"><span class="bullet medium"></span><span>Medium Risk:</span><strong>5 Patients</strong></div>
+                  <div class="risk-row"><span class="bullet low"></span><span>Low Risk:</span><strong>22 Patients</strong></div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- ══════════════════════════════════════════════
+             2. PATIENT EXPLORER SECTION
+        ══════════════════════════════════════════════ -->
+        <section id="explorer-section" class="dashboard-section">
+          <div class="explorer-grid">
+
+            <!-- Patient List Sidebar -->
+            <div class="patient-list-sidebar card glass-panel">
+              <div class="search-filter-box">
+                <div class="search-input-wrapper">
+                  <span class="material-symbols-outlined search-icon">search</span>
+                  <input type="text" id="patient-search" placeholder="Search Patient ID...">
+                </div>
+                <div class="filter-btn-group">
+                  <button class="filter-btn active" data-filter="ALL">All</button>
+                  <button class="filter-btn" data-filter="NF">NF</button>
+                  <button class="filter-btn" data-filter="MI">MI</button>
+                  <button class="filter-btn" data-filter="CONTROL">Ctrl</button>
+                </div>
+              </div>
+              <div class="patient-list" id="patient-list-container">
+                <!-- Populated Dynamically -->
+              </div>
+            </div>
+
+            <!-- Patient Detail Panel -->
+            <div class="patient-detail-panel" id="patient-detail-container">
+              <div class="empty-state">
+                <div class="empty-state-icon">
+                  <span class="material-symbols-outlined">psychology</span>
+                </div>
+                <h3>Select a Patient Profile</h3>
+                <p>Choose a patient from the explorer list to load their digital brain twin latent states, clinical delta predictions, and run the interactive Human-in-the-Loop decision gate.</p>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- ══════════════════════════════════════════════
+             3. EXPLAINABLE AI SECTION
+        ══════════════════════════════════════════════ -->
+        <section id="xai-section" class="dashboard-section">
+          <div class="dashboard-grid">
+
+            <!-- SHAP Bar Plot -->
+            <div class="card glass-panel span-2">
+              <div class="card-header">
+                <div class="card-header-title">
+                  <span class="material-symbols-outlined card-icon">stacked_bar_chart</span>
+                  <h3>CQL Policy Feature Importance (KernelSHAP)</h3>
+                </div>
+                <span class="badge badge-violet">LOCAL EXPLANATION</span>
+              </div>
+              <div class="card-body xai-body">
+                <div class="xai-plot-wrapper">
+                  <img src="/shap_bar_plot.png" alt="SHAP Feature Importance Plot" class="shap-plot-img"
+                    onerror="this.style.display='none'; document.getElementById('shap-error').style.display='flex';">
+                  <div id="shap-error" class="alert alert-warning" style="display:none;">
+                    <span class="material-symbols-outlined">error_outline</span>
+                    <span>SHAP bar plot not found. Run <code>shap_explainer.py</code> to generate it.</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- SHAP Table -->
+            <div class="card glass-panel">
+              <div class="card-header">
+                <div class="card-header-title">
+                  <span class="material-symbols-outlined card-icon">format_list_numbered</span>
+                  <h3>Feature Attribution Rankings</h3>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="table-wrap">
+                  <table class="custom-table" id="shap-table">
+                    <thead>
+                      <tr>
+                        <th>Rank</th>
+                        <th>State Feature</th>
+                        <th>Mean |SHAP|</th>
+                      </tr>
+                    </thead>
+                    <tbody></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+      </main><!-- /main-content -->
+    </div><!-- /main-wrap -->
+
+  </div><!-- /app-shell -->
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast">
+    <i class="fa-solid fa-circle-check toast-icon"></i>
+    <span class="toast-msg">Decision saved successfully!</span>
+  </div>
+
+  <!-- WebGL Hero Shader Script -->
+  <script>
+  (function() {
+    const canvas = document.getElementById('hero-canvas');
+    if (!canvas) return;
+    function sync() {
+      const w = canvas.parentElement.clientWidth || 600;
+      const h = canvas.parentElement.clientHeight || 300;
+      if (canvas.width !== w || canvas.height !== h) { canvas.width = w; canvas.height = h; }
+    }
+    if (typeof ResizeObserver !== 'undefined') new ResizeObserver(sync).observe(canvas.parentElement);
+    sync();
+    const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+    if (!gl) return;
+    const vs = `attribute vec2 p; void main(){ gl_Position=vec4(p,0,1); }`;
+    const fs = `
+      precision highp float;
+      uniform float t; uniform vec2 res;
+      void main(){
+        vec2 uv = gl_FragCoord.xy/res;
+        vec2 p = uv*2.0-1.0; p.x *= res.x/res.y;
+        float d = length(p);
+        float n = sin(p.x*4.0+t*0.3)*cos(p.y*3.5-t*0.2)*0.5+0.5;
+        float g = 0.015/(d+0.3);
+        vec3 c1 = vec3(0.0,0.95,1.0);
+        vec3 c2 = vec3(0.5,0.0,1.0);
+        vec3 col = mix(c1,c2,n)*g*0.4;
+        col += mix(c1,c2,n)*(1.0-d)*0.06;
+        gl_FragColor = vec4(col, 0.85);
+      }
+    `;
+    function mkShader(type, src) { const s=gl.createShader(type); gl.shaderSource(s,src); gl.compileShader(s); return s; }
+    const prog = gl.createProgram();
+    gl.attachShader(prog, mkShader(gl.VERTEX_SHADER, vs));
+    gl.attachShader(prog, mkShader(gl.FRAGMENT_SHADER, fs));
+    gl.linkProgram(prog); gl.useProgram(prog);
+    const buf = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1,1,-1,-1,1,1,1]), gl.STATIC_DRAW);
+    const pos = gl.getAttribLocation(prog,'p');
+    gl.enableVertexAttribArray(pos); gl.vertexAttribPointer(pos,2,gl.FLOAT,false,0,0);
+    const uT=gl.getUniformLocation(prog,'t'), uR=gl.getUniformLocation(prog,'res');
+    function render(ts) {
+      sync();
+      gl.viewport(0,0,canvas.width,canvas.height);
+      gl.uniform1f(uT, ts*0.001);
+      gl.uniform2f(uR, canvas.width, canvas.height);
+      gl.drawArrays(gl.TRIANGLE_STRIP,0,4);
+      requestAnimationFrame(render);
+    }
+    render(0);
+  })();
+  </script>
+
+  <!-- App Logic -->
+  <script src="app.js" defer></script>
+</body>
+</html>
