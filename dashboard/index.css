@@ -945,23 +945,33 @@ body {
 
 /* ── TOAST ──────────────────────────────────────────────────────── */
 .toast {
-  position: fixed; bottom: 24px; left: 50%;
+  position: fixed; bottom: 28px; left: 50%;
   transform: translateX(-50%) translateY(80px);
   display: flex; align-items: center; gap: 10px;
   padding: 12px 24px;
-  background: var(--c-emerald);
-  color: #050b10; font-size: 13px; font-weight: 600;
+  background: rgba(13, 22, 22, 0.95);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--c-cyan);
+  color: var(--c-text);
+  font-family: var(--font-body);
+  font-size: 13px; font-weight: 600;
   border-radius: var(--radius-md);
-  box-shadow: 0 8px 30px rgba(0,230,118,0.3);
+  box-shadow: 0 10px 30px rgba(0,242,254,0.25);
   z-index: 1000;
   opacity: 0;
+  pointer-events: none;
   transition: transform 0.4s var(--ease), opacity 0.3s;
 }
 .toast.show {
   opacity: 1;
+  pointer-events: auto;
   transform: translateX(-50%) translateY(0);
 }
-.toast-icon { flex-shrink: 0; }
+.toast-msg {
+  color: var(--c-text);
+}
+.toast-icon { flex-shrink: 0; font-size: 16px; }
 
 /* ── TREND TAGS (legacy compat) ─────────────────────────────────── */
 .trend-tag { font-family: var(--font-mono); font-size: 9px; font-weight: 700; padding: 2px 8px; border-radius: 99px; letter-spacing: 0.06em; text-transform: uppercase; }

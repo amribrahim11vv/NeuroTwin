@@ -700,26 +700,26 @@ document.addEventListener("DOMContentLoaded", () => {
     // ----------------------------------------------------------------
     function showToast(msg, type = "success") {
         const toast = document.getElementById("toast");
-        const icon = toast.querySelector("i");
+        const icon = toast.querySelector("i") || toast.querySelector(".toast-icon");
         const text = toast.querySelector(".toast-msg");
 
         text.textContent = msg;
 
         if (type === "success") {
-            icon.className = "fa-solid fa-circle-check toast-icon";
-            toast.style.backgroundColor = "var(--status-online)";
-            toast.style.color = "#050b18";
-            toast.style.boxShadow = "0 10px 25px rgba(0, 230, 118, 0.3)";
+            if (icon) icon.className = "fa-solid fa-circle-check toast-icon";
+            toast.style.borderColor = "var(--c-emerald)";
+            toast.style.color = "var(--c-emerald)";
+            toast.style.boxShadow = "0 10px 30px rgba(0, 230, 118, 0.25)";
         } else if (type === "info") {
-            icon.className = "fa-solid fa-circle-info toast-icon";
-            toast.style.backgroundColor = "var(--primary)";
-            toast.style.color = "#050b18";
-            toast.style.boxShadow = "0 10px 25px rgba(0, 212, 255, 0.3)";
+            if (icon) icon.className = "fa-solid fa-circle-info toast-icon";
+            toast.style.borderColor = "var(--c-cyan)";
+            toast.style.color = "var(--c-cyan)";
+            toast.style.boxShadow = "0 10px 30px rgba(0, 242, 254, 0.25)";
         } else if (type === "error") {
-            icon.className = "fa-solid fa-circle-exclamation toast-icon";
-            toast.style.backgroundColor = "var(--status-error)";
-            toast.style.color = "#ffffff";
-            toast.style.boxShadow = "0 10px 25px rgba(255, 82, 82, 0.3)";
+            if (icon) icon.className = "fa-solid fa-circle-exclamation toast-icon";
+            toast.style.borderColor = "var(--c-red)";
+            toast.style.color = "var(--c-red)";
+            toast.style.boxShadow = "0 10px 30px rgba(255, 51, 102, 0.25)";
         }
 
         toast.classList.add("show");
